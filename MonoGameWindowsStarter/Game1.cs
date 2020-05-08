@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace MonoGameWindowsStarter
 {
@@ -11,6 +13,10 @@ namespace MonoGameWindowsStarter
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        Song[] songs;
+        int songiterator = 0;
+        
 
         public Game1()
         {
@@ -27,7 +33,7 @@ namespace MonoGameWindowsStarter
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            songs = new Song[5];
             base.Initialize();
         }
 
@@ -39,7 +45,12 @@ namespace MonoGameWindowsStarter
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            songs[0] = Content.Load<Song>("chattle");
+            songs[1] = Content.Load<Song>("goblin_scherzo");
+            songs[2] = Content.Load<Song>("pixels_and_pawns");
+            songs[3] = Content.Load<Song>("march_of_the_minotaur");
+            songs[4] = Content.Load<Song>("halloween_morning");
+            
             // TODO: use this.Content to load your game content here
         }
 
@@ -62,8 +73,16 @@ namespace MonoGameWindowsStarter
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-
+            // TODO: Add your update logic here           
+            if(MediaPlayer.State != MediaState.Playing)
+            {
+                MediaPlayer.Play(songs[songiterator]);
+                songiterator++;
+                if(songiterator > 4)
+                {
+                    songiterator = 0;
+                }
+            }
             base.Update(gameTime);
         }
 
