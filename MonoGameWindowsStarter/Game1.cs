@@ -23,6 +23,13 @@ namespace MonoGameWindowsStarter
         List<IPiece> pieces;
         bool isPieceSelected;
 
+        /// <summary>
+        /// Particle system textures
+        /// </summary>
+        List<Texture2D> attackTextures;
+        List<Texture2D> movementTextures;
+        List<Texture2D> deathTextures;
+
         string turn;
 
         public Game1()
@@ -155,6 +162,19 @@ namespace MonoGameWindowsStarter
 
 
             //Create king
+
+            // Create list of textures for attack 
+            attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Gray"));
+            attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Yellow"));
+            attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Orange"));
+
+
+            movementTextures.Add(Content.Load<Texture2D>("Art/Particles/"));
+            movementTextures.Add(Content.Load<Texture2D>("Art/Particles/"));
+
+            deathTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Red"));
+            deathTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Gray"));
+
         }
 
         /// <summary>
