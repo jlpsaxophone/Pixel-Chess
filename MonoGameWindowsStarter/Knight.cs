@@ -37,9 +37,15 @@ namespace MonoGameWindowsStarter
 
         AnimationState state;
 
+        public bool Dead => (state == AnimationState.Dead);
+
         TimeSpan animationTime;
 
-        public Knight(Vector2 position, Texture2D texture, SoundEffect attackSound, SoundEffect moveSound, SoundEffect deathSound)
+        string side;
+
+        public string Side => side;
+
+        public Knight(String side, Vector2 position, Texture2D texture, SoundEffect attackSound, SoundEffect moveSound, SoundEffect deathSound)
         {
             //Set positions
             positionCurrent = position;
@@ -54,6 +60,7 @@ namespace MonoGameWindowsStarter
             this.deathSound = deathSound;
 
             //Set misc
+            this.side = side;
             drawMovement = false;
             state = AnimationState.Idle0;
             animationTime = new TimeSpan(0);
@@ -80,11 +87,37 @@ namespace MonoGameWindowsStarter
             deathSound.Play();
         }
 
+        public void Attack()
+        {
+
+        }
+
         public bool CollidesWithPiece(Point location)
         {
-            if ((location.X >= positionCurrent.X && location.X <= positionCurrent.X + 64) &&
-                (location.Y >= positionCurrent.Y && location.Y <= positionCurrent.Y + 64))
+            if ((location.X >= positionCurrent.X && location.X < positionCurrent.X + 64) &&
+                (location.Y >= positionCurrent.Y && location.Y < positionCurrent.Y + 64))
                 return true;
+            return false;
+        }
+
+        public bool IsValidMove(Point location)
+        {
+            Point locationRounded = new Point(
+                (location.X / 64) * 64,
+                (location.Y / 64) * 64
+                );
+
+            Point moveLocation;
+            if (side == "white")
+            {
+                moveLocation = new Point((int)positionCurrent.X + 64, (int)positionCurrent.Y);
+            }
+            else
+            {
+                moveLocation = new Point((int)positionCurrent.X - 64, (int)positionCurrent.Y);
+            }
+
+            if (locationRounded.Equals(moveLocation)) return true;
             return false;
         }
 
