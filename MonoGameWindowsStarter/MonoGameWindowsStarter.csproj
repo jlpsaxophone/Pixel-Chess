@@ -41,13 +41,20 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnimationState.cs" />
+    <Compile Include="Bishop.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="IPiece.cs" />
+    <Compile Include="King.cs" />
+    <Compile Include="Knight.cs" />
     <Compile Include="Particle.cs" />
     <Compile Include="ParticleSystem.cs" />
+    <Compile Include="Pawn.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queen.cs" />
+    <Compile Include="Rook.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

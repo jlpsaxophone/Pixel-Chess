@@ -15,9 +15,9 @@ namespace MonoGameWindowsStarter
 
 		Texture2D texture;
 
-		SpriteBatch spriteBatch;
+		Rectangle size;
 
-		public Board(GraphicsDevice graphicsDevice, int size, Texture2D texture)
+		public Board(Texture2D texture)
 		{
 			board = new int[,]
 			{
@@ -31,8 +31,8 @@ namespace MonoGameWindowsStarter
 				{1, 1, 1, 1, 1, 1, 1, 1}
 			};
 
-			this.spriteBatch = new SpriteBatch(graphicsDevice);
 			this.texture = texture;
+			size = texture.Bounds;
 		}
 
 		/// <summary>
@@ -54,11 +54,9 @@ namespace MonoGameWindowsStarter
 		/// <summary>
 		/// Draw the board
 		/// </summary>
-		public void Draw()
+		public void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.Begin();			
-
-			spriteBatch.End();
+			spriteBatch.Draw(texture, size, Color.White);
 		}
 	}
 }
