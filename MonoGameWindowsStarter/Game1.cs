@@ -87,16 +87,31 @@ namespace MonoGameWindowsStarter
             //Import Pawn Textures
             Texture2D blackPawn = Content.Load<Texture2D>("Art/Pieces/Goblin/BlackGoblin");
             Texture2D whitePawn = Content.Load<Texture2D>("Art/Pieces/Goblin/WhiteGoblin");
+            
+            //Import Rook Textures
+            Texture2D blackRook = Content.Load<Texture2D>("Art/Pieces/Minotaur/BlackMinotaur");
+            Texture2D whiteRook = Content.Load<Texture2D>("Art/Pieces/Minotaur/WhiteMinotaur");
+
+            //Import Bishop Textures
+            Texture2D blackBishop = Content.Load<Texture2D>("Art/Pieces/Gryphon/BlackGryphon");
+            Texture2D whiteBishop = Content.Load<Texture2D>("Art/Pieces/Gryphon/WhiteGryphon");
+
+            //Import Knight Textures
+            Texture2D blackKnight = Content.Load<Texture2D>("Art/Pieces/Centaur/BlackCentaur");
+            Texture2D whiteKnight = Content.Load<Texture2D>("Art/Pieces/Centaur/WhiteCentaur");
+
+            //Import Queen Textures
+            Texture2D blackQueen = Content.Load<Texture2D>("Art/Pieces/Dragon/BlackDragon");
+            Texture2D whiteQueen = Content.Load<Texture2D>("Art/Pieces/Dragon/WhiteDragon");
 
             //Make white pieces
             //Create pawns
-            for(int i = 0; i < 8; i++)
+            for (int i = 0; i < 8; i++)
             {
                 Vector2 position = new Vector2(64, i * 64);
                 pieces.Add(new Pawn("white", position, whitePawn, pawnAttackSE, pawnMoveSE, pawndeathSE));
             }
 
-            //Create rooks
             //Create knights
             //Create bishops
             //Create queen
