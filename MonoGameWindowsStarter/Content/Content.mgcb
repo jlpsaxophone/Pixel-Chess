@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Art/Board/Chess Board.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Art/Board/Chess Board.png;Art/Board/ChessBoard.png
+
 #begin Art/Pieces/Centaur/BlackCentaur.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -109,6 +121,30 @@
 /processorParam:TextureFormat=Color
 /build:Art/Pieces/Gryphon/WhiteGryphon.png
 
+#begin Art/Pieces/King/BlackKing.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Art/Pieces/King/BlackKing.png
+
+#begin Art/Pieces/King/WhiteKing.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Art/Pieces/King/WhiteKing.png
+
 #begin Art/Pieces/Minotaur/BlackMinotaur.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -133,6 +169,7 @@
 /processorParam:TextureFormat=Color
 /build:Art/Pieces/Minotaur/WhiteMinotaur.png
 
+
 #begin Art/SelectionBorder.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -144,4 +181,35 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Art/SelectionBorder.png
+
+#begin chattle.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:chattle.mp3
+
+#begin goblin_scherzo.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:goblin_scherzo.mp3
+
+#begin halloween_morning.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:halloween_morning.mp3
+
+#begin march_of_the_minotaur.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:march_of_the_minotaur.mp3
+
+#begin pixels_and_pawns.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:pixels_and_pawns.mp3
+
 
