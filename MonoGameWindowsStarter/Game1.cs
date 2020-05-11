@@ -23,6 +23,8 @@ namespace MonoGameWindowsStarter
         List<IPiece> pieces;
         bool isPieceSelected;
 
+        string turn;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -49,6 +51,7 @@ namespace MonoGameWindowsStarter
             songs = new Song[5];
             pieces = new List<IPiece>();
             isPieceSelected = false;
+            turn = "white";
             base.Initialize();
         }
 
@@ -105,8 +108,8 @@ namespace MonoGameWindowsStarter
             //Create pawns
             for (int i = 0; i < 8; i++)
             {
-                Vector2 position = new Vector2(i * 64, 384);
-                pieces.Add(new Pawn(position, whitePawn, pawnAttackSE, pawnMoveSE, pawndeathSE));
+                Vector2 position = new Vector2(64, i * 64);
+                pieces.Add(new Pawn("white", position, whitePawn, pawnAttackSE, pawnMoveSE, pawndeathSE));
             }
 
             //Create knights
@@ -131,8 +134,8 @@ namespace MonoGameWindowsStarter
             //Create pawns
             for (int i = 0; i < 8; i++)
             {
-                Vector2 position = new Vector2(i * 64, 64);
-                pieces.Add(new Pawn(position, blackPawn, pawnAttackSE, pawnMoveSE, pawndeathSE));
+                Vector2 position = new Vector2(384, i * 64);
+                pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawndeathSE));
             }
 
             //Create knights
@@ -179,19 +182,54 @@ namespace MonoGameWindowsStarter
             {
                 foreach(IPiece piece in pieces)
                 {
-                    //Check if piece was clicked on
-                    if(piece.CollidesWithPiece(mouseState.Position))
+                    //Check if no piece is selected, the piece is on the right side, and the piece was clicked on
+                    if(!isPieceSelected && piece.Side == turn && !piece.Dead && piece.CollidesWithPiece(mouseState.Position))
                     {
-                        //Check if a piece is already selected
-                        if(isPieceSelected)
+                        piece.Select();
+                        isPieceSelected = true;
+                    }
+                    else if(piece.Selected && piece.IsValidMove(mouseState.Position))
+                    {
+                        //Get move location
+                        Vector2 moveLocation = new Vector2((mouseState.Position.X / 64) * 64, (mouseState.Position.Y / 64) * 64);
+
+                        bool movedPiece = false;
+
+                        IPiece collidingPiece = null;
+                        //Check if piece is attacking another piece
+                        foreach(IPiece otherPiece in pieces)
                         {
-                            //if (piece.Selected)
-                                //piece.Move();
+                            if(otherPiece.CollidesWithPiece(moveLocation.ToPoint()))
+                            {
+                                collidingPiece = otherPiece;
+                                break;
+                            }
                         }
-                        else
+
+                        if(collidingPiece == null)
                         {
-                            piece.Select();
-                            isPieceSelected = true;
+                            piece.Move(moveLocation);
+                            movedPiece = true;
+                        }
+                        else if(collidingPiece.Side != turn)
+                        {
+                            piece.Attack();
+                            piece.Move(moveLocation);
+                            collidingPiece.Kill();
+                            movedPiece = true;
+                        }
+
+                        if(movedPiece)
+                        {
+                            isPieceSelected = false;
+                            if (turn == "white")
+                            {
+                                turn = "black";
+                            }
+                            else
+                            {
+                                turn = "white";
+                            }
                         }
                     }
                 }

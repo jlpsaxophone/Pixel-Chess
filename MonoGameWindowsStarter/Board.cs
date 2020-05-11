@@ -10,27 +10,12 @@ namespace MonoGameWindowsStarter
 {
     public class Board
     {
-		// 2D matric containing the board
-        int[,] board;
-
 		Texture2D texture;
 
 		Rectangle size;
 
 		public Board(Texture2D texture)
 		{
-			board = new int[,]
-			{
-				{1, 1, 1, 1, 1, 1, 1, 1},
-				{1, 1, 1, 1, 1, 1, 1, 1},
-				{0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0},
-				{1, 1, 1, 1, 1, 1, 1, 1},
-				{1, 1, 1, 1, 1, 1, 1, 1}
-			};
-
 			this.texture = texture;
 			size = texture.Bounds;
 		}
@@ -44,9 +29,6 @@ namespace MonoGameWindowsStarter
 		{
 			int x = Convert.ToInt32(coordinates.X);
 			int y = Convert.ToInt32(coordinates.Y); 
-
-			if (board[x, y] == 1)
-				return true;
 
 			return false; 
 		}

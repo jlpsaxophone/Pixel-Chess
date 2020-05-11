@@ -15,13 +15,21 @@ namespace MonoGameWindowsStarter
     {
         bool Selected { get; }
 
+        string Side { get; }
+
+        bool Dead { get; }
+
         void Move(Vector2 positionNew);
 
         void Select();
 
         void Kill();
 
+        void Attack();
+
         bool CollidesWithPiece(Point location);
+
+        bool IsValidMove(Point location);
 
         void Update(GameTime gameTime);
 
