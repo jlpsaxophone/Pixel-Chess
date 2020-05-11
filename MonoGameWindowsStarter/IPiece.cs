@@ -5,67 +5,34 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGameWindowsStarter
 {
-
-    enum AnimationState
-    {
-
-    }
-
     /// <summary>
-    /// A class representing a texture to render with a SpriteBatch
+    /// An interface representing a chess piece
     /// </summary>
-    public class IPiece
+    interface IPiece
     {
-        Texture2D[] textures;
+        bool Selected { get; }
 
-        ParticleSystem attackParticles;
+        string Side { get; }
 
-        ParticleSystem moveParticles;
+        bool Dead { get; }
 
-        ParticleSystem deathParticles;
+        void Move(Vector2 positionNew);
 
-        SoundEffect attackSound;
+        void Select();
 
-        SoundEffect moveSound;
+        void Kill();
 
-        SoundEffect deathSound;
+        void Attack();
 
-        Vector2 positionCurrent;
+        bool CollidesWithPiece(Point location);
 
-        Vector2 positionDestination;
+        bool IsValidMove(Point location);
 
-        bool drawMovement; 
+        void Update(GameTime gameTime);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public IPiece()
-        {
-            
-        }
-
-        public void Move()
-        {
-
-        }
-
-        public void Select()
-        {
-
-        }
-
-        public void Update(GameTime gameTime)
-        {
-
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-
-        }
+        void Draw(SpriteBatch spriteBatch);
     }
 }

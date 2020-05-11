@@ -13,7 +13,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Art/Board/Chess Board.png
+#begin Art/Board.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -23,7 +23,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Art/Board/Chess Board.png;Art/Board/ChessBoard.png
+/build:Art/Board.png
 
 #begin Art/Pieces/Centaur/BlackCentaur.png
 /importer:TextureImporter
@@ -169,7 +169,6 @@
 /processorParam:TextureFormat=Color
 /build:Art/Pieces/Minotaur/WhiteMinotaur.png
 
-
 #begin Art/SelectionBorder.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -212,4 +211,21 @@
 /processorParam:Quality=Best
 /build:pixels_and_pawns.mp3
 
+#begin Sounds/Attack/Attack08.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Attack/Attack08.wav
+
+#begin Sounds/Death/Death03.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Death/Death03.wav
+
+#begin Sounds/Movement/Movement06.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Movement/Movement06.wav
 

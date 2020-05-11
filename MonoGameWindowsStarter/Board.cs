@@ -10,29 +10,14 @@ namespace MonoGameWindowsStarter
 {
     public class Board
     {
-		// 2D matric containing the board
-        int[,] board;
-
 		Texture2D texture;
 
-		SpriteBatch spriteBatch;
+		Rectangle size;
 
-		public Board(GraphicsDevice graphicsDevice, int size, Texture2D texture)
+		public Board(Texture2D texture)
 		{
-			board = new int[,]
-			{
-				{1, 1, 1, 1, 1, 1, 1, 1},
-				{1, 1, 1, 1, 1, 1, 1, 1},
-				{0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0},
-				{1, 1, 1, 1, 1, 1, 1, 1},
-				{1, 1, 1, 1, 1, 1, 1, 1}
-			};
-
-			this.spriteBatch = new SpriteBatch(graphicsDevice);
 			this.texture = texture;
+			size = texture.Bounds;
 		}
 
 		/// <summary>
@@ -45,20 +30,15 @@ namespace MonoGameWindowsStarter
 			int x = Convert.ToInt32(coordinates.X);
 			int y = Convert.ToInt32(coordinates.Y); 
 
-			if (board[x, y] == 1)
-				return true;
-
 			return false; 
 		}
 
 		/// <summary>
 		/// Draw the board
 		/// </summary>
-		public void Draw()
+		public void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.Begin();			
-
-			spriteBatch.End();
+			spriteBatch.Draw(texture, size, Color.White);
 		}
 	}
 }
