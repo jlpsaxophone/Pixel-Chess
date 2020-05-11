@@ -125,6 +125,18 @@ namespace MonoGameWindowsStarter
             blackQueen = Content.Load<Texture2D>("Art/Pieces/Dragon/BlackDragon");
             whiteQueen = Content.Load<Texture2D>("Art/Pieces/Dragon/WhiteDragon");
 
+            // Create list of textures for attack 
+            attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Gray"));
+            attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Yellow"));
+            attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Orange"));
+
+            movementTextures.Add(Content.Load<Texture2D>("Art/Particles/"));
+            movementTextures.Add(Content.Load<Texture2D>("Art/Particles/"));
+
+            deathTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Red"));
+            deathTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Gray"));
+
+
             //Make white pieces
             //Create pawns
             for (int i = 0; i < 8; i++)
@@ -236,17 +248,6 @@ namespace MonoGameWindowsStarter
 
             //Create king
 
-            // Create list of textures for attack 
-            attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Gray"));
-            attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Yellow"));
-            attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Orange"));
-
-
-            movementTextures.Add(Content.Load<Texture2D>("Art/Particles/"));
-            movementTextures.Add(Content.Load<Texture2D>("Art/Particles/"));
-
-            deathTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Red"));
-            deathTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Gray"));
 
         }
 
