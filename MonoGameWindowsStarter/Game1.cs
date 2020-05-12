@@ -182,6 +182,7 @@ namespace MonoGameWindowsStarter
         /// </summary>
         public void ResetBoard() {
             pieces.Clear();
+            turn = "white";
 
             //Make white pieces
             //Create pawns
