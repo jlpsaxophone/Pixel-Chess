@@ -41,6 +41,7 @@ namespace MonoGameWindowsStarter
         bool isPieceSelected;
 
         string turn;
+
         IPiece previousPiece;
         Vector2 previousPosition;
         string previousTurn;
@@ -49,6 +50,7 @@ namespace MonoGameWindowsStarter
 
         bool playing;
         string winningTeam;
+        SpriteFont font;
 
         public Game1()
         {
@@ -89,6 +91,9 @@ namespace MonoGameWindowsStarter
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            //Load in SpriteFont
+            font = Content.Load<SpriteFont>("Font");
 
             //Load in songs
             songs[0] = Content.Load<Song>("chattle");
@@ -399,6 +404,19 @@ namespace MonoGameWindowsStarter
             foreach(IPiece piece in pieces)
             {
                 piece.Draw(spriteBatch);
+            }
+
+            if(!playing)
+            {
+                Vector2 location = font.MeasureString(winningTeam + " team won!");
+                location.X = (graphics.GraphicsDevice.Viewport.Width / 2) - (location.X / 2);
+                location.Y = graphics.GraphicsDevice.Viewport.Height / 4;
+                spriteBatch.DrawString(font, winningTeam + " team won!", location, new Color(132, 194, 74));
+
+                location = font.MeasureString("Press 'R' to play again!");
+                location.X = (graphics.GraphicsDevice.Viewport.Width / 2) - (location.X / 2);
+                location.Y = graphics.GraphicsDevice.Viewport.Height / 2;
+                spriteBatch.DrawString(font, "Press 'R' to play again!", location, new Color(132, 194, 74));
             }
 
             spriteBatch.End();
