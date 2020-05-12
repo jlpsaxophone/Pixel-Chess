@@ -187,6 +187,13 @@
 /processorParam:Quality=Best
 /build:chattle.mp3
 
+#begin Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Font.spritefont
+
 #begin goblin_scherzo.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
