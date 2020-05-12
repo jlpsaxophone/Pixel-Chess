@@ -31,6 +31,8 @@ namespace MonoGameWindowsStarter
         Texture2D whiteKnight;
         Texture2D blackQueen;
         Texture2D whiteQueen;
+        Texture2D blackKing;
+        Texture2D whiteKing;
 
         Board board;
 
@@ -118,6 +120,10 @@ namespace MonoGameWindowsStarter
             blackQueen = Content.Load<Texture2D>("Art/Pieces/Dragon/BlackDragon");
             whiteQueen = Content.Load<Texture2D>("Art/Pieces/Dragon/WhiteDragon");
 
+            //Import King Textures
+            blackKing = Content.Load<Texture2D>("Art/Pieces/King/BlackKing");
+            whiteKing = Content.Load<Texture2D>("Art/Pieces/King/WhiteKing");
+
             //Make white pieces
             //Create pawns
             for (int i = 0; i < 8; i++)
@@ -142,7 +148,7 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Queen("white", new Vector2(0, 192), whiteQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
-            //pieces.Add(new King("white", new Vector(0, 256), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new King("white", new Vector2(0, 256), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Make black pieces
             //Create pawns
@@ -168,7 +174,7 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Queen("black", new Vector2(448, 256), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
-            //pieces.Add(new King("black", new Vector(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new King("black", new Vector2(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
         }
 
         /// <summary>
@@ -201,7 +207,7 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Queen("white", new Vector2(0, 192), whiteQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
-            //pieces.Add(new King("white", new Vector(0, 256), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new King("white", new Vector2(0, 256), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Make black pieces
             //Create pawns
@@ -227,7 +233,7 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Queen("black", new Vector2(448, 256), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
-            //pieces.Add(new King("black", new Vector(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new King("black", new Vector2(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
         }
 
         /// <summary>
