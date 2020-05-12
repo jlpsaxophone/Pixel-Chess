@@ -267,7 +267,7 @@ namespace MonoGameWindowsStarter
                         piece.Select();
                         isPieceSelected = true;
                     }
-                    else if(piece.Selected && piece.IsValidMove(mouseState.Position))
+                    else if(piece.Selected)
                     {
                         //Get move location
                         Vector2 moveLocation = new Vector2((mouseState.Position.X / 64) * 64, (mouseState.Position.Y / 64) * 64);
@@ -312,6 +312,10 @@ namespace MonoGameWindowsStarter
                         }
                     }
                 }
+            }
+            else if(mouseState.RightButton == ButtonState.Pressed)
+            {
+                isPieceSelected = false;
             }
 
             //Check if the next song needs to be played           
