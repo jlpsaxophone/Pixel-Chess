@@ -334,6 +334,8 @@ namespace MonoGameWindowsStarter
 
                         if(collidingPiece == null)
                         {
+                            killedPiece = null;
+                            pieceKilled = false;
                             piece.Move(moveLocation);
                             movedPiece = true;
                         }
