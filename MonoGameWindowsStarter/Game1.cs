@@ -286,7 +286,7 @@ namespace MonoGameWindowsStarter
                         //Check if piece is attacking another piece
                         foreach(IPiece otherPiece in pieces)
                         {
-                            if(otherPiece.CollidesWithPiece(moveLocation.ToPoint()))
+                            if(otherPiece.CollidesWithPiece(moveLocation.ToPoint()) && !otherPiece.Dead)
                             {
                                 collidingPiece = otherPiece;
                                 break;
