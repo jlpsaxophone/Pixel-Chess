@@ -15,6 +15,7 @@ namespace MonoGameWindowsStarter
         Idle4,
         Idle5,
         Dead,
-        Attack
+        Attack, 
+        Move
     }
 }

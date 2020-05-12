@@ -46,6 +46,7 @@ namespace MonoGameWindowsStarter
         TimeSpan animationTime;
 
         string side;
+ 
 
         public string Side => side;
 
@@ -72,9 +73,9 @@ namespace MonoGameWindowsStarter
             animationTime = new TimeSpan(0);
 
             // Set particle systems
-            attackParticles = new ParticleSystem(attackTextures, positionCurrent, ParticleType.Attack);
-            movementParticles = new ParticleSystem(movementTextures, positionCurrent, ParticleType.Movement);
-            deathParticles = new ParticleSystem(deathTextures, positionCurrent, ParticleType.Death);
+            attackParticles = new ParticleSystem(attackTextures, positionCurrent, positionDestination, ParticleType.Attack, this.side);
+            movementParticles = new ParticleSystem(movementTextures, positionCurrent, positionDestination, ParticleType.Movement, this.side);
+            deathParticles = new ParticleSystem(deathTextures, positionCurrent, positionDestination, ParticleType.Death, this.side);
         }
 
         public void setState(AnimationState state)
@@ -139,9 +140,12 @@ namespace MonoGameWindowsStarter
 
         public void Update(GameTime gameTime)
         {
+            //Vector2 oldPosition = positionCurrent; 
 
             if (state != AnimationState.Dead)
             {
+
+
                 //Update animationTime
                 animationTime += gameTime.ElapsedGameTime;
 
@@ -156,8 +160,13 @@ namespace MonoGameWindowsStarter
                 //Check if piece should be moved
                 if (positionCurrent != positionDestination && animationTime.TotalMilliseconds == 0)
                 {
+                    // movementParticles.Update(positionCurrent, gameTime);
+                    //state = AnimationState.Move;
                     positionCurrent = positionDestination;
                 }
+
+                //if (state == AnimationState.Attack)
+                    //attackParticles.Update(oldPosition, gameTime);
             }
             else if (state == AnimationState.Dead)
             {
@@ -168,16 +177,32 @@ namespace MonoGameWindowsStarter
         public void Draw(SpriteBatch spriteBatch)
         {
             if (state != AnimationState.Dead)
-            { 
+            {
+                /*
+                if (state == AnimationState.Attack)
+                {
+                    attackParticles.Draw(spriteBatch);
+                    state = AnimationState.Idle0;
+                }
+                */
                 //Draw piece
                 Rectangle source = new Rectangle((int)state * 64, 0, 64, 64);
                 spriteBatch.Draw(texture, positionCurrent, source, Color.White);
+                
+                /*
+                if (state == AnimationState.Move)
+                {
+                    movementParticles.Draw(spriteBatch);
+                    state = AnimationState.Idle0;
+                }
+                */
 
                 //Draw movement if selected
                 if (drawMovement)
                 {
 
                 }
+
             }
             else 
             {

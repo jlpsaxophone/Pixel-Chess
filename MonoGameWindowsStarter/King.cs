@@ -17,7 +17,7 @@ namespace MonoGameWindowsStarter
 
         ParticleSystem attackParticles;
 
-        ParticleSystem moveParticles;
+        ParticleSystem movementParticles;
 
         ParticleSystem deathParticles;
 
@@ -49,7 +49,8 @@ namespace MonoGameWindowsStarter
 
         public string Side => side;
 
-        public King(String side, Vector2 position, Texture2D texture, SoundEffect attackSound, SoundEffect moveSound, SoundEffect deathSound)
+        public King(String side, Vector2 position, Texture2D texture, SoundEffect attackSound, SoundEffect moveSound, SoundEffect deathSound,
+            List<Texture2D> attackTextures, List<Texture2D> movementTextures, List<Texture2D> deathTextures)
         {
             //Set positions
             positionCurrent = position;
@@ -68,6 +69,10 @@ namespace MonoGameWindowsStarter
             drawMovement = false;
             state = AnimationState.Idle0;
             animationTime = new TimeSpan(0);
+
+            attackParticles = new ParticleSystem(attackTextures, positionCurrent, positionDestination, ParticleType.Attack, this.side);
+            movementParticles = new ParticleSystem(movementTextures, positionCurrent, positionDestination, ParticleType.Movement, this.side);
+            deathParticles = new ParticleSystem(deathTextures, positionCurrent, positionDestination, ParticleType.Death, this.side);
         }
 
         public void setState(AnimationState state)
@@ -152,6 +157,10 @@ namespace MonoGameWindowsStarter
                     positionCurrent = positionDestination;
                 }
             }
+            else if (state == AnimationState.Dead)
+            {
+                deathParticles.Update(positionCurrent, gameTime);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -167,6 +176,12 @@ namespace MonoGameWindowsStarter
                 {
 
                 }
+            }
+            else
+            {
+                Rectangle source = new Rectangle((int)state * 64, 0, 64, 64);
+                spriteBatch.Draw(texture, positionCurrent, source, Color.White);
+                deathParticles.Draw(spriteBatch);
             }
         }
     }

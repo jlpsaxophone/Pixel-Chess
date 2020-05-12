@@ -53,16 +53,23 @@ namespace MonoGameWindowsStarter
 
         float angularVelocity;
 
-        ParticleType particleType;  
+        ParticleType particleType;
+
+        string team;
+
+        Vector2 positionCurrent;
+        Vector2 positionDestination;
+        double travelDistance; 
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="textures">List of textures</param>
-        /// <param name="location"></param>
-        public ParticleSystem(List<Texture2D> textures, Vector2 location, ParticleType systemType)
+        /// <param name="locationCurrent"></param>
+        public ParticleSystem(List<Texture2D> textures, Vector2 locationCurrent, Vector2 locationDestination, ParticleType systemType, string side)
         {
-            this.particleType = systemType; 
+            this.team = side; 
+            this.particleType = systemType;
             this.textures = textures;
             this.particles = new List<Particle>();
             random = new Random();
@@ -70,17 +77,26 @@ namespace MonoGameWindowsStarter
             systemTTL = 0;
             particleCount = 100;
             particleSize = (float)0;
-            EmitterLocation = location;
+            positionCurrent = locationCurrent;
+            positionDestination = locationDestination;
+            EmitterLocation = positionCurrent;
+            travelDistance = FindDistance(positionCurrent, positionDestination);
 
             switch (this.particleType)
             {
 
                 case ParticleType.Attack:
+                    systemTTL = 200;
+                    particleCount = 150;
+                    particleSize = (float)0.60;
                     break;
                 case ParticleType.Movement:
+                    systemTTL = 200;
+                    particleCount = 600;
+                    particleSize = (float)0.01;
                     break;
                 case ParticleType.Death:
-                    systemTTL = 200;
+                    systemTTL = 300;
                     particleCount = 150;
                     particleSize = (float)0.60;
                     break;
@@ -90,17 +106,21 @@ namespace MonoGameWindowsStarter
         /// <summary>
         /// Update 
         /// </summary>
-        public void Update(Vector2 location, GameTime time)
+        public void Update(Vector2 locationCurrent, GameTime time)
         {
             elapsedTime += time.ElapsedGameTime.TotalMilliseconds;
 
             if(this.particleType == ParticleType.Death)
-                this.EmitterLocation = new Vector2(location.X + 30, location.Y + 30);
+                this.EmitterLocation = new Vector2(locationCurrent.X + 30, locationCurrent.Y + 30);
+            if (this.particleType == ParticleType.Movement)
+                this.EmitterLocation = new Vector2(locationCurrent.X, locationCurrent.Y + 50);
 
             if (elapsedTime < systemTTL)
             {
                 for (int i = 0; i < this.particleCount; i++)
                 {
+                    //if (this.particleType == ParticleType.Movement && i % 400 == 0)
+                        //this.EmitterLocation = new Vector2(locationCurrent.X + 5, locationCurrent.Y);
                     particles.Add(GenerateNewParticle());
                 }
 
@@ -136,23 +156,45 @@ namespace MonoGameWindowsStarter
             {
 
                 case ParticleType.Attack:
+                    //EmitterLocation = positionDestination; 
+                    angle = 0;
+                    particleTTL = 3;
+                    angularVelocity = 0.1f * (float)(random.NextDouble() * 2 - 1);
+                    velocity = new Vector2(
+                                        1f * (float)(random.NextDouble() * 2000 - 1),
+                                        1f * (float)(random.NextDouble() * 2 - 1)); ;
                     break;
                 case ParticleType.Movement:
+                    angle = 0;
+                    particleTTL = 10;
+                    angularVelocity = 0;// .1f * (float)(random.NextDouble() * 2 - 1);
+                    velocity = new Vector2(
+                        1f * (float)(random.NextDouble() * (travelDistance * 50) - 1),
+                        1f * (float)((double)random.Next(-15, 15)));
                     break;
                 case ParticleType.Death:
                     angle = 0;
                     particleTTL = 3;
                     angularVelocity = 0.1f * (float)(random.NextDouble() * 2 - 1);
-                    //angularVelocity = 1000;
                     velocity = new Vector2(
                                     1f * (float)((double)random.Next(-15, 15)),
                                     1f * (float)((double)random.Next(-15, 15)));
-                    //1f * (float)(random.NextDouble() * 12 - 1));
                     break;
             }
+
             return new Particle(texture, this.EmitterLocation, velocity, 
                                 angle, angularVelocity, Color.White, 
                                 this.particleSize, particleTTL);
+        }
+
+        public Vector2 angleOf(Vector2 p1, Vector2 p2)
+        {
+            return new Vector2(p2.X - p1.X, p1.Y - p2.Y);
+        }
+
+        public double FindDistance(Vector2 p1, Vector2 p2)
+        {
+            return Math.Sqrt(((p2.X - p1.Y) * (p2.X - p1.Y)) + ((p2.Y - p1.Y) * (p2.Y - p1.Y)));
         }
 
         /// <summary>
