@@ -150,48 +150,53 @@ namespace MonoGameWindowsStarter
             }
 
             //Create knights
-            pieces.Add(new Knight("white", new Vector2(64, 448), whiteKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
-            pieces.Add(new Knight("white", new Vector2(384, 448), whiteKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Knight("white", new Vector2(0, 64), whiteKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Knight("white", new Vector2(0, 384), whiteKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create bishops
-            pieces.Add(new Bishop("white", new Vector2(320, 448), whiteBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
-            pieces.Add(new Bishop("white", new Vector2(128, 448), whiteBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Bishop("white", new Vector2(0, 320), whiteBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Bishop("white", new Vector2(0, 128), whiteBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create rooks
+            pieces.Add(new Rook("white", new Vector2(0, 0), whiteRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
             pieces.Add(new Rook("white", new Vector2(0, 448), whiteRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
-            pieces.Add(new Rook("white", new Vector2(448, 448), whiteRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create queen
-            pieces.Add(new Queen("white", new Vector2(192, 448), whiteQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Queen("white", new Vector2(0, 192), whiteQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
-
+            //pieces.Add(new King("white", new Vector(0, 256), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Make black pieces
             //Create pawns
             for (int i = 0; i < 8; i++)
             {
+<<<<<<< HEAD
                 Vector2 position = new Vector2(i * 64, 384);
                 pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
+=======
+                Vector2 position = new Vector2(384, i * 64);
+                pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+>>>>>>> d431c77459c4876034ffc69f6df01adf4a80b091
             }
 
             //Create knights
-            pieces.Add(new Knight("black", new Vector2(64, 0), blackKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
-            pieces.Add(new Knight("black", new Vector2(384, 0), blackKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Knight("black", new Vector2(448, 64), blackKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Knight("black", new Vector2(448, 384), blackKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create bishops
-            pieces.Add(new Bishop("black", new Vector2(320, 0), blackBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
-            pieces.Add(new Bishop("black", new Vector2(128, 0), blackBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Bishop("black", new Vector2(448, 320), blackBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Bishop("black", new Vector2(448, 128), blackBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create rooks
-            pieces.Add(new Rook("black", new Vector2(0, 0), blackRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
             pieces.Add(new Rook("black", new Vector2(448, 0), blackRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Rook("black", new Vector2(448, 448), blackRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create queen
-            pieces.Add(new Queen("black", new Vector2(192, 0), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
-
+            pieces.Add(new Queen("black", new Vector2(448, 256), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
+            //pieces.Add(new King("black", new Vector(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
         }
 
         /// <summary>
@@ -204,55 +209,68 @@ namespace MonoGameWindowsStarter
             //Create pawns
             for (int i = 0; i < 8; i++)
             {
+<<<<<<< HEAD
                 Vector2 position = new Vector2(i * 64, 64);
                 pieces.Add(new Pawn("white", position, whitePawn, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
+=======
+                Vector2 position = new Vector2(64, i * 64);
+                pieces.Add(new Pawn("white", position, whitePawn, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+>>>>>>> d431c77459c4876034ffc69f6df01adf4a80b091
             }
 
             //Create knights
-            pieces.Add(new Knight("white", new Vector2(64, 448), whiteKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
-            pieces.Add(new Knight("white", new Vector2(384, 448), whiteKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Knight("white", new Vector2(0, 64), whiteKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Knight("white", new Vector2(0, 384), whiteKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create bishops
-            pieces.Add(new Bishop("white", new Vector2(320, 448), whiteBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
-            pieces.Add(new Bishop("white", new Vector2(128, 448), whiteBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Bishop("white", new Vector2(0, 320), whiteBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Bishop("white", new Vector2(0, 128), whiteBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create rooks
+            pieces.Add(new Rook("white", new Vector2(0, 0), whiteRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
             pieces.Add(new Rook("white", new Vector2(0, 448), whiteRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
-            pieces.Add(new Rook("white", new Vector2(448, 448), whiteRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create queen
-            pieces.Add(new Queen("white", new Vector2(192, 448), whiteQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Queen("white", new Vector2(0, 192), whiteQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
-
+            //pieces.Add(new King("white", new Vector(0, 256), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Make black pieces
             //Create pawns
             for (int i = 0; i < 8; i++)
             {
+<<<<<<< HEAD
                 Vector2 position = new Vector2(i * 64, 384);
                 pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
+=======
+                Vector2 position = new Vector2(384, i * 64);
+                pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+>>>>>>> d431c77459c4876034ffc69f6df01adf4a80b091
             }
 
             //Create knights
-            pieces.Add(new Knight("black", new Vector2(64, 0), blackKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
-            pieces.Add(new Knight("black", new Vector2(384, 0), blackKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Knight("black", new Vector2(448, 64), blackKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Knight("black", new Vector2(448, 384), blackKnight, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create bishops
-            pieces.Add(new Bishop("black", new Vector2(320, 0), blackBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
-            pieces.Add(new Bishop("black", new Vector2(128, 0), blackBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Bishop("black", new Vector2(448, 320), blackBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Bishop("black", new Vector2(448, 128), blackBishop, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create rooks
-            pieces.Add(new Rook("black", new Vector2(0, 0), blackRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
             pieces.Add(new Rook("black", new Vector2(448, 0), blackRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Rook("black", new Vector2(448, 448), blackRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create queen
-            pieces.Add(new Queen("black", new Vector2(192, 0), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
-
+            pieces.Add(new Queen("black", new Vector2(448, 256), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
+<<<<<<< HEAD
 
 
+=======
+            //pieces.Add(new King("black", new Vector(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+>>>>>>> d431c77459c4876034ffc69f6df01adf4a80b091
         }
 
         /// <summary>

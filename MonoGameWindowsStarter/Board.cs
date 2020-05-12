@@ -38,6 +38,7 @@ namespace MonoGameWindowsStarter
 		/// </summary>
 		public void Draw(SpriteBatch spriteBatch)
 		{
+			//Rotate to make the board display correctly
 			spriteBatch.Draw(texture, size, Color.White);
 		}
 	}
