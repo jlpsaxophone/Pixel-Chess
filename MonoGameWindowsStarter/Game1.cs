@@ -37,6 +37,13 @@ namespace MonoGameWindowsStarter
         List<IPiece> pieces;
         bool isPieceSelected;
 
+        /// <summary>
+        /// Particle system textures
+        /// </summary>
+        List<Texture2D> attackTextures;
+        List<Texture2D> movementTextures;
+        List<Texture2D> deathTextures;
+
         string turn;
 
         public Game1()
@@ -118,12 +125,28 @@ namespace MonoGameWindowsStarter
             blackQueen = Content.Load<Texture2D>("Art/Pieces/Dragon/BlackDragon");
             whiteQueen = Content.Load<Texture2D>("Art/Pieces/Dragon/WhiteDragon");
 
+            // Create list of textures for attack 
+
+            attackTextures = new List<Texture2D>();
+            attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Gray"));
+            attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Yellow"));
+            attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Orange"));
+
+            movementTextures = new List<Texture2D>();
+            //movementTextures.Add(Content.Load<Texture2D>("Art/Particles/"));
+            //movementTextures.Add(Content.Load<Texture2D>("Art/Particles/"));
+
+            deathTextures = new List<Texture2D>();
+            deathTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Red"));
+            deathTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Gray"));
+
+
             //Make white pieces
             //Create pawns
             for (int i = 0; i < 8; i++)
             {
-                Vector2 position = new Vector2(64, i * 64);
-                pieces.Add(new Pawn("white", position, whitePawn, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+                Vector2 position = new Vector2(i * 64, 64);
+                pieces.Add(new Pawn("white", position, whitePawn, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
             }
 
             //Create knights
@@ -148,8 +171,13 @@ namespace MonoGameWindowsStarter
             //Create pawns
             for (int i = 0; i < 8; i++)
             {
+<<<<<<< HEAD
+                Vector2 position = new Vector2(i * 64, 384);
+                pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
+=======
                 Vector2 position = new Vector2(384, i * 64);
                 pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+>>>>>>> d431c77459c4876034ffc69f6df01adf4a80b091
             }
 
             //Create knights
@@ -181,8 +209,13 @@ namespace MonoGameWindowsStarter
             //Create pawns
             for (int i = 0; i < 8; i++)
             {
+<<<<<<< HEAD
+                Vector2 position = new Vector2(i * 64, 64);
+                pieces.Add(new Pawn("white", position, whitePawn, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
+=======
                 Vector2 position = new Vector2(64, i * 64);
                 pieces.Add(new Pawn("white", position, whitePawn, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+>>>>>>> d431c77459c4876034ffc69f6df01adf4a80b091
             }
 
             //Create knights
@@ -207,8 +240,13 @@ namespace MonoGameWindowsStarter
             //Create pawns
             for (int i = 0; i < 8; i++)
             {
+<<<<<<< HEAD
+                Vector2 position = new Vector2(i * 64, 384);
+                pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
+=======
                 Vector2 position = new Vector2(384, i * 64);
                 pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+>>>>>>> d431c77459c4876034ffc69f6df01adf4a80b091
             }
 
             //Create knights
@@ -227,7 +265,12 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Queen("black", new Vector2(448, 256), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
+<<<<<<< HEAD
+
+
+=======
             //pieces.Add(new King("black", new Vector(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+>>>>>>> d431c77459c4876034ffc69f6df01adf4a80b091
         }
 
         /// <summary>
