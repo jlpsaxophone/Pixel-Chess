@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
+using System;
 
 namespace MonoGameWindowsStarter
 {
@@ -31,6 +32,8 @@ namespace MonoGameWindowsStarter
         Texture2D whiteKnight;
         Texture2D blackQueen;
         Texture2D whiteQueen;
+        Texture2D blackKing;
+        Texture2D whiteKing;
 
         Board board;
 
@@ -45,6 +48,16 @@ namespace MonoGameWindowsStarter
         List<Texture2D> deathTextures;
 
         string turn;
+
+        IPiece previousPiece;
+        Vector2 previousPosition;
+        string previousTurn;
+        bool pieceKilled = false;
+        IPiece killedPiece;
+
+        bool playing;
+        string winningTeam;
+        SpriteFont font;
 
         public Game1()
         {
@@ -73,6 +86,7 @@ namespace MonoGameWindowsStarter
             pieces = new List<IPiece>();
             isPieceSelected = false;
             turn = "white";
+            playing = true;
             base.Initialize();
         }
 
@@ -84,6 +98,9 @@ namespace MonoGameWindowsStarter
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            //Load in SpriteFont
+            font = Content.Load<SpriteFont>("Font");
 
             //Load in songs
             songs[0] = Content.Load<Song>("chattle");
@@ -143,6 +160,10 @@ namespace MonoGameWindowsStarter
 
 
 
+            //Import King Textures
+            blackKing = Content.Load<Texture2D>("Art/Pieces/King/BlackKing");
+            whiteKing = Content.Load<Texture2D>("Art/Pieces/King/WhiteKing");
+
             //Make white pieces
             //Create pawns
             for (int i = 0; i < 8; i++)
@@ -164,10 +185,10 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Rook("white", new Vector2(0, 448), whiteRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create queen
-            pieces.Add(new Queen("white", new Vector2(0, 192), whiteQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Queen("white", new Vector2(0, 256), whiteQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
-            //pieces.Add(new King("white", new Vector(0, 256), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new King("white", new Vector2(0, 192), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Make black pieces
             //Create pawns
@@ -193,7 +214,7 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Queen("black", new Vector2(448, 256), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
-            //pieces.Add(new King("black", new Vector(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new King("black", new Vector2(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
         }
 
         /// <summary>
@@ -201,6 +222,7 @@ namespace MonoGameWindowsStarter
         /// </summary>
         public void ResetBoard() {
             pieces.Clear();
+            turn = "white";
 
             //Make white pieces
             //Create pawns
@@ -228,7 +250,7 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Queen("white", new Vector2(0, 192), whiteQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
-            //pieces.Add(new King("white", new Vector(0, 256), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new King("white", new Vector2(0, 256), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Make black pieces
             //Create pawns
@@ -254,8 +276,10 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Queen("black", new Vector2(448, 256), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
-            //pieces.Add(new King("black", new Vector(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new King("black", new Vector2(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
+            playing = true;
+            winningTeam = "";
         }
 
         /// <summary>
@@ -279,7 +303,7 @@ namespace MonoGameWindowsStarter
 
             //Check mouse
             MouseState mouseState = Mouse.GetState();
-            if(mouseState.LeftButton == ButtonState.Pressed)
+            if(mouseState.LeftButton == ButtonState.Pressed && playing)
             {
                 foreach(IPiece piece in pieces)
                 {
@@ -287,12 +311,14 @@ namespace MonoGameWindowsStarter
                     if(!isPieceSelected && piece.Side == turn && !piece.Dead && piece.CollidesWithPiece(mouseState.Position))
                     {
                         piece.Select();
+                        previousPiece = piece;
+                        previousPosition = previousPiece.Position;
                         isPieceSelected = true;
                     }
                     else if(piece.Selected)
                     {
                         //Get move location
-                        Vector2 moveLocation = new Vector2((mouseState.Position.X / 64) * 64, (mouseState.Position.Y / 64) * 64);
+                        Vector2 moveLocation = new Vector2((mouseState.Position.X / 64) * 64, (mouseState.Position.Y / 64) * 64);                      
 
                         bool movedPiece = false;
 
@@ -300,7 +326,7 @@ namespace MonoGameWindowsStarter
                         //Check if piece is attacking another piece
                         foreach(IPiece otherPiece in pieces)
                         {
-                            if(otherPiece.CollidesWithPiece(moveLocation.ToPoint()))
+                            if(otherPiece.CollidesWithPiece(moveLocation.ToPoint()) && !otherPiece.Dead)
                             {
                                 collidingPiece = otherPiece;
                                 break;
@@ -316,8 +342,17 @@ namespace MonoGameWindowsStarter
                         {
                             piece.Attack();
                             piece.Move(moveLocation);
+                            killedPiece = collidingPiece;
+                            pieceKilled = true;
                             collidingPiece.Kill();
                             movedPiece = true;
+
+                            //Check for end game condition
+                            if(collidingPiece.GetType() == typeof(King))
+                            {
+                                playing = false;
+                                winningTeam = turn;
+                            }
                         }
 
                         if(movedPiece)
@@ -325,17 +360,19 @@ namespace MonoGameWindowsStarter
                             isPieceSelected = false;
                             if (turn == "white")
                             {
+                                previousTurn = "white";
                                 turn = "black";
                             }
                             else
                             {
+                                previousTurn = "black";
                                 turn = "white";
                             }
                         }
                     }
                 }
             }
-            else if(mouseState.RightButton == ButtonState.Pressed)
+            else if(mouseState.RightButton == ButtonState.Pressed && playing)
             {
                 isPieceSelected = false;
             }
@@ -355,6 +392,17 @@ namespace MonoGameWindowsStarter
             if (Keyboard.GetState().IsKeyDown(Keys.R))
             {
                 ResetBoard();
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Back) && playing)
+            {
+                previousPiece.Move(previousPosition);
+                turn = previousTurn;
+                if(pieceKilled) 
+                {
+                      killedPiece.setState(AnimationState.Idle0);          
+                }
+                pieceKilled = false;
             }
 
             //Update pieces
@@ -383,6 +431,21 @@ namespace MonoGameWindowsStarter
             foreach(IPiece piece in pieces)
             {
                 piece.Draw(spriteBatch);
+            }
+
+            if(!playing)
+            {
+                Vector2 location = font.MeasureString(winningTeam + " team won!");
+                location.X = (graphics.GraphicsDevice.Viewport.Width / 2) - (location.X / 2);
+                location.Y = graphics.GraphicsDevice.Viewport.Height / 4;
+                spriteBatch.DrawString(font, winningTeam + " team won!", location - new Vector2(2, -2), Color.Black);
+                spriteBatch.DrawString(font, winningTeam + " team won!", location, new Color(142, 237, 53));
+
+                location = font.MeasureString("Press 'R' to play again!");
+                location.X = (graphics.GraphicsDevice.Viewport.Width / 2) - (location.X / 2);
+                location.Y = graphics.GraphicsDevice.Viewport.Height / 2;
+                spriteBatch.DrawString(font, "Press 'R' to play again!", location - new Vector2(2, -2), Color.Black);
+                spriteBatch.DrawString(font, "Press 'R' to play again!", location, new Color(142, 237, 53));
             }
 
             spriteBatch.End();

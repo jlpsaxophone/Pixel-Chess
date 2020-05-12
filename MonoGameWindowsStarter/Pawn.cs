@@ -31,17 +31,15 @@ namespace MonoGameWindowsStarter
 
         Vector2 positionDestination;
 
-        int TTL;
-
-        double elapsedTime; 
-
-        bool particleStarted; 
+        public Vector2 Position => positionCurrent;
 
         bool drawMovement;
 
         public bool Selected => drawMovement;
 
         AnimationState state;
+
+        public AnimationState State => state;
 
         public bool Dead => (state == AnimationState.Dead);
 
@@ -79,6 +77,11 @@ namespace MonoGameWindowsStarter
             deathParticles = new ParticleSystem(deathTextures, positionCurrent, ParticleType.Death);
         }
 
+        public void setState(AnimationState state)
+        {
+            this.state = state;
+        }
+
         public void Select()
         {
             //Turn on drawing movement
@@ -89,7 +92,7 @@ namespace MonoGameWindowsStarter
         {
             //Turn off drawing movement
             drawMovement = false;
-
+            moveSound.Play();
             //Set new position
             positionDestination = positionNew;
         }
@@ -146,7 +149,7 @@ namespace MonoGameWindowsStarter
                 if (animationTime.TotalMilliseconds >= FRAME_RATE)
                 {
                     state++;
-                    if (state == AnimationState.Dead) state = AnimationState.Idle0;
+                    if (state == AnimationState.Idle4) state = AnimationState.Idle0;
                     animationTime = new TimeSpan(0);
                 }
 
