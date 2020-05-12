@@ -184,10 +184,10 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Rook("white", new Vector2(0, 448), whiteRook, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
 
             //Create queen
-            pieces.Add(new Queen("white", new Vector2(0, 256), whiteQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
+            pieces.Add(new Queen("white", new Vector2(0, 192), whiteQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
 
             //Create king
-            pieces.Add(new King("white", new Vector2(0, 192), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
+            pieces.Add(new King("white", new Vector2(0, 256), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
 
             //Make black pieces
             //Create pawns
@@ -210,10 +210,10 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Rook("black", new Vector2(448, 448), blackRook, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
 
             //Create queen
-            pieces.Add(new Queen("black", new Vector2(448, 256), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
+            pieces.Add(new Queen("black", new Vector2(448, 192), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
 
             //Create king
-            pieces.Add(new King("black", new Vector2(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
+            pieces.Add(new King("black", new Vector2(448, 256), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
         }
 
         /// <summary>
@@ -272,10 +272,10 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Rook("black", new Vector2(448, 448), blackRook, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
 
             //Create queen
-            pieces.Add(new Queen("black", new Vector2(448, 256), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
+            pieces.Add(new Queen("black", new Vector2(448, 192), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
 
             //Create king
-            pieces.Add(new King("black", new Vector2(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
+            pieces.Add(new King("black", new Vector2(448, 256), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
 
             playing = true;
             winningTeam = "";
