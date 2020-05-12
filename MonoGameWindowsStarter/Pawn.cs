@@ -17,7 +17,7 @@ namespace MonoGameWindowsStarter
 
         ParticleSystem attackParticles;
 
-        ParticleSystem moveParticles;
+        ParticleSystem movementParticles;
 
         ParticleSystem deathParticles;
 
@@ -45,7 +45,8 @@ namespace MonoGameWindowsStarter
 
         public string Side => side;
 
-        public Pawn(String side, Vector2 position, Texture2D texture, SoundEffect attackSound, SoundEffect moveSound, SoundEffect deathSound)
+        public Pawn(String side, Vector2 position, Texture2D texture, SoundEffect attackSound, SoundEffect moveSound, SoundEffect deathSound, 
+                    List<Texture2D> attackTextures, List<Texture2D> movementTextures, List<Texture2D> deathTextures)
         {
             //Set positions
             positionCurrent = position;
@@ -64,6 +65,11 @@ namespace MonoGameWindowsStarter
             drawMovement = false;
             state = AnimationState.Idle0;
             animationTime = new TimeSpan(0);
+
+            // Set particle systems
+            attackParticles = new ParticleSystem(attackTextures, positionCurrent);
+            movementParticles = new ParticleSystem(movementTextures, positionCurrent);
+            movementParticles = new ParticleSystem(deathTextures, positionCurrent);
         }
 
         public void Select()
