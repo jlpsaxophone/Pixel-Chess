@@ -142,7 +142,7 @@ namespace MonoGameWindowsStarter
                 if (animationTime.TotalMilliseconds >= FRAME_RATE)
                 {
                     state++;
-                    if (state == AnimationState.Dead) state = AnimationState.Idle0;
+                    if (state == AnimationState.Idle5) state = AnimationState.Idle0;
                     animationTime = new TimeSpan(0);
                 }
 
