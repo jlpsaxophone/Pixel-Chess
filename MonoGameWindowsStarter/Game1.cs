@@ -160,10 +160,10 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Rook("white", new Vector2(0, 448), whiteRook, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create queen
-            pieces.Add(new Queen("white", new Vector2(0, 192), whiteQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new Queen("white", new Vector2(0, 256), whiteQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
-            pieces.Add(new King("white", new Vector2(0, 256), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+            pieces.Add(new King("white", new Vector2(0, 192), whiteKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Make black pieces
             //Create pawns
