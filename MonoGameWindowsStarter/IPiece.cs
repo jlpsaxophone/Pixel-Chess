@@ -19,12 +19,14 @@ namespace MonoGameWindowsStarter
 
         bool Dead { get; }
 
+        Vector2 Position { get; }
+
         void Move(Vector2 positionNew);
 
         void Select();
 
         void Kill();
-
+        
         void Attack();
 
         bool CollidesWithPiece(Point location);
@@ -34,5 +36,9 @@ namespace MonoGameWindowsStarter
         void Update(GameTime gameTime);
 
         void Draw(SpriteBatch spriteBatch);
+
+        AnimationState State { get; }
+
+        void setState(AnimationState state);
     }
 }

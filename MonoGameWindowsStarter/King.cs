@@ -31,11 +31,15 @@ namespace MonoGameWindowsStarter
 
         Vector2 positionDestination;
 
+        public Vector2 Position => positionCurrent;
+
         bool drawMovement;
 
         public bool Selected => drawMovement;
 
         AnimationState state;
+
+        public AnimationState State => state;
 
         public bool Dead => (state == AnimationState.Dead);
 
@@ -65,6 +69,12 @@ namespace MonoGameWindowsStarter
             state = AnimationState.Idle0;
             animationTime = new TimeSpan(0);
         }
+
+        public void setState(AnimationState state)
+        {
+            this.state = state;
+        }
+
 
         public void Select()
         {
