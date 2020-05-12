@@ -126,13 +126,17 @@ namespace MonoGameWindowsStarter
             whiteQueen = Content.Load<Texture2D>("Art/Pieces/Dragon/WhiteDragon");
 
             // Create list of textures for attack 
+
+            attackTextures = new List<Texture2D>();
             attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Gray"));
             attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Yellow"));
             attackTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Orange"));
 
-            movementTextures.Add(Content.Load<Texture2D>("Art/Particles/"));
-            movementTextures.Add(Content.Load<Texture2D>("Art/Particles/"));
+            //movementTextures = new List<Texture2D>();
+            //movementTextures.Add(Content.Load<Texture2D>("Art/Particles/"));
+            //movementTextures.Add(Content.Load<Texture2D>("Art/Particles/"));
 
+            deathTextures = new List<Texture2D>();
             deathTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Red"));
             deathTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Gray"));
 
