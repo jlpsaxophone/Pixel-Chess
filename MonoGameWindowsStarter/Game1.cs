@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
+using System;
 
 namespace MonoGameWindowsStarter
 {
@@ -46,6 +47,9 @@ namespace MonoGameWindowsStarter
         bool pieceKilled = false;
         IPiece killedPiece;
 
+        bool playing;
+        string winningTeam;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -73,6 +77,7 @@ namespace MonoGameWindowsStarter
             pieces = new List<IPiece>();
             isPieceSelected = false;
             turn = "white";
+            playing = true;
             base.Initialize();
         }
 
@@ -240,6 +245,9 @@ namespace MonoGameWindowsStarter
 
             //Create king
             pieces.Add(new King("black", new Vector2(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
+
+            playing = true;
+            winningTeam = "";
         }
 
         /// <summary>
@@ -263,7 +271,7 @@ namespace MonoGameWindowsStarter
 
             //Check mouse
             MouseState mouseState = Mouse.GetState();
-            if(mouseState.LeftButton == ButtonState.Pressed)
+            if(mouseState.LeftButton == ButtonState.Pressed && playing)
             {
                 foreach(IPiece piece in pieces)
                 {
@@ -306,6 +314,13 @@ namespace MonoGameWindowsStarter
                             pieceKilled = true;
                             collidingPiece.Kill();
                             movedPiece = true;
+
+                            //Check for end game condition
+                            if(collidingPiece.GetType() == typeof(King))
+                            {
+                                playing = false;
+                                winningTeam = turn;
+                            }
                         }
 
                         if(movedPiece)
@@ -325,7 +340,7 @@ namespace MonoGameWindowsStarter
                     }
                 }
             }
-            else if(mouseState.RightButton == ButtonState.Pressed)
+            else if(mouseState.RightButton == ButtonState.Pressed && playing)
             {
                 isPieceSelected = false;
             }
@@ -347,7 +362,7 @@ namespace MonoGameWindowsStarter
                 ResetBoard();
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Back))
+            if (Keyboard.GetState().IsKeyDown(Keys.Back) && playing)
             {
                 previousPiece.Move(previousPosition);
                 turn = previousTurn;
