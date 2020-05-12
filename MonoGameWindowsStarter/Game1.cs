@@ -307,6 +307,10 @@ namespace MonoGameWindowsStarter
                     }
                 }
             }
+            else if(mouseState.RightButton == ButtonState.Pressed)
+            {
+                isPieceSelected = false;
+            }
 
             //Check if the next song needs to be played           
             if(MediaPlayer.State != MediaState.Playing)
