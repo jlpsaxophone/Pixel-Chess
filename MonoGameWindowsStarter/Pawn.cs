@@ -17,7 +17,7 @@ namespace MonoGameWindowsStarter
 
         ParticleSystem attackParticles;
 
-        ParticleSystem moveParticles;
+        ParticleSystem movementParticles;
 
         ParticleSystem deathParticles;
 
@@ -46,11 +46,14 @@ namespace MonoGameWindowsStarter
         TimeSpan animationTime;
 
         string side;
+ 
 
         public string Side => side;
 
-        public Pawn(String side, Vector2 position, Texture2D texture, SoundEffect attackSound, SoundEffect moveSound, SoundEffect deathSound)
+        public Pawn(String side, Vector2 position, Texture2D texture, SoundEffect attackSound, SoundEffect moveSound, SoundEffect deathSound, 
+                    List<Texture2D> attackTextures, List<Texture2D> movementTextures, List<Texture2D> deathTextures)
         {
+
             //Set positions
             positionCurrent = position;
             positionDestination = position;
@@ -68,6 +71,11 @@ namespace MonoGameWindowsStarter
             drawMovement = false;
             state = AnimationState.Idle0;
             animationTime = new TimeSpan(0);
+
+            // Set particle systems
+            attackParticles = new ParticleSystem(attackTextures, positionCurrent, positionDestination, ParticleType.Attack, this.side);
+            movementParticles = new ParticleSystem(movementTextures, positionCurrent, positionDestination, ParticleType.Movement, this.side);
+            deathParticles = new ParticleSystem(deathTextures, positionCurrent, positionDestination, ParticleType.Death, this.side);
         }
 
         public void setState(AnimationState state)
@@ -132,8 +140,12 @@ namespace MonoGameWindowsStarter
 
         public void Update(GameTime gameTime)
         {
+            //Vector2 oldPosition = positionCurrent; 
+
             if (state != AnimationState.Dead)
             {
+
+
                 //Update animationTime
                 animationTime += gameTime.ElapsedGameTime;
 
@@ -146,10 +158,19 @@ namespace MonoGameWindowsStarter
                 }
 
                 //Check if piece should be moved
-                if(positionCurrent != positionDestination && animationTime.TotalMilliseconds == 0)
+                if (positionCurrent != positionDestination && animationTime.TotalMilliseconds == 0)
                 {
+                    // movementParticles.Update(positionCurrent, gameTime);
+                    //state = AnimationState.Move;
                     positionCurrent = positionDestination;
                 }
+
+                //if (state == AnimationState.Attack)
+                    //attackParticles.Update(oldPosition, gameTime);
+            }
+            else if (state == AnimationState.Dead)
+            {
+                deathParticles.Update(positionCurrent, gameTime);
             }
         }
 
@@ -157,15 +178,37 @@ namespace MonoGameWindowsStarter
         {
             if (state != AnimationState.Dead)
             {
+                /*
+                if (state == AnimationState.Attack)
+                {
+                    attackParticles.Draw(spriteBatch);
+                    state = AnimationState.Idle0;
+                }
+                */
                 //Draw piece
                 Rectangle source = new Rectangle((int)state * 64, 0, 64, 64);
                 spriteBatch.Draw(texture, positionCurrent, source, Color.White);
+                
+                /*
+                if (state == AnimationState.Move)
+                {
+                    movementParticles.Draw(spriteBatch);
+                    state = AnimationState.Idle0;
+                }
+                */
 
                 //Draw movement if selected
                 if (drawMovement)
                 {
 
                 }
+
+            }
+            else 
+            {
+                Rectangle source = new Rectangle((int)state * 64, 0, 64, 64);
+                spriteBatch.Draw(texture, positionCurrent, source, Color.White);
+                deathParticles.Draw(spriteBatch);
             }
         }
     }

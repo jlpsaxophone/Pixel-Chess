@@ -9,116 +9,204 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MonoGameWindowsStarter
 {
-    /// <summary>
-    /// A delegate for spawning particles
-    /// </summary>
-    /// <param name="particle">The particle to spawn</param>
-    public delegate void ParticleSpawner(ref Particle particle);
-
-    /// <summary>
-    /// A delegate for updating particles
-    /// </summary>
-    /// <param name="deltaT">The seconds elapsed between frames</param>
-    /// <param name="particle">The particle to update</param>
-    public delegate void ParticleUpdater(float deltaT, ref Particle particle);
-
-    /// <summary>
-    /// A class representing a particle system 
-    /// </summary>
+    public enum ParticleType
+    {
+        Attack, 
+        Movement, 
+        Death
+    }
     public class ParticleSystem
     {
+        private Random random;
         /// <summary>
-        /// Holds a delegate to use when spawning a new particle
+        /// Location of the emitter
         /// </summary>
-        public ParticleSpawner SpawnParticle { get; set; }
-
+        public Vector2 EmitterLocation { get; set; }
         /// <summary>
-        /// Holds a delegate to use when updating a particle 
+        /// List of particles
         /// </summary>
-        /// <param name="particle"></param>
-        public ParticleUpdater UpdateParticle { get; set; }
-
-        Particle[] particles;
-
-        Texture2D texture;
-
-        SpriteBatch spriteBatch;
-        Random random = new Random();
-
-        public Vector2 Emitter { get; set; }
-        public int SpawnPerFrame { get; set; }
-
-        // counter for spawning array 
-        int nextIndex = 0;
+        private List<Particle> particles;
+        /// <summary>
+        /// List of textures
+        /// </summary>
+        private List<Texture2D> textures;
 
         /// <summary>
-        /// Constructs a new particle engine 
+        /// Number of particles
         /// </summary>
-        /// <param name="graphicsDevice">The graphics device</param>
-        /// <param name="size">The maximum number of particles in the system</param>
-        /// <param name="texture">The texture of the particles</param> 
-        public ParticleSystem(GraphicsDevice graphicsDevice, int size, Texture2D texture)
+        private int particleCount;
+
+        /// <summary>
+        /// Measuring elapsed time
+        /// </summary>
+        double elapsedTime;
+
+        /// <summary>
+        /// Particle systems TTL 
+        /// </summary>
+        double systemTTL;
+
+        /// <summary>
+        /// Size of the particles
+        /// </summary>
+        float particleSize;
+
+        float angularVelocity;
+
+        ParticleType particleType;
+
+        string team;
+
+        Vector2 positionCurrent;
+        Vector2 positionDestination;
+        double travelDistance; 
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="textures">List of textures</param>
+        /// <param name="locationCurrent"></param>
+        public ParticleSystem(List<Texture2D> textures, Vector2 locationCurrent, Vector2 locationDestination, ParticleType systemType, string side)
         {
-            this.particles = new Particle[size];
-            this.spriteBatch = new SpriteBatch(graphicsDevice);
-            this.texture = texture;
+            this.team = side; 
+            this.particleType = systemType;
+            this.textures = textures;
+            this.particles = new List<Particle>();
+            random = new Random();
+
+            systemTTL = 0;
+            particleCount = 100;
+            particleSize = (float)0;
+            positionCurrent = locationCurrent;
+            positionDestination = locationDestination;
+            EmitterLocation = positionCurrent;
+            travelDistance = FindDistance(positionCurrent, positionDestination);
+
+            switch (this.particleType)
+            {
+
+                case ParticleType.Attack:
+                    systemTTL = 200;
+                    particleCount = 150;
+                    particleSize = (float)0.60;
+                    break;
+                case ParticleType.Movement:
+                    systemTTL = 200;
+                    particleCount = 600;
+                    particleSize = (float)0.01;
+                    break;
+                case ParticleType.Death:
+                    systemTTL = 300;
+                    particleCount = 150;
+                    particleSize = (float)0.60;
+                    break;
+            }
         }
 
-
-        /// <summary> 
-        /// Updates the particle system, spawining new particles and 
-        /// moving all live particles around the screen 
+        /// <summary>
+        /// Update 
         /// </summary>
-        /// <param name="gameTime">A structure representing time in the game</param>
-        public void Update(GameTime gameTime)
+        public void Update(Vector2 locationCurrent, GameTime time)
         {
-            // Make sure our delegate properties are set
-            if (SpawnParticle == null || UpdateParticle == null) return;
+            elapsedTime += time.ElapsedGameTime.TotalMilliseconds;
 
-            // Part 1: Spawn new particles 
-            for (int i = 0; i < SpawnPerFrame; i++)
+            if(this.particleType == ParticleType.Death)
+                this.EmitterLocation = new Vector2(locationCurrent.X + 30, locationCurrent.Y + 30);
+            if (this.particleType == ParticleType.Movement)
+                this.EmitterLocation = new Vector2(locationCurrent.X, locationCurrent.Y + 50);
+
+            if (elapsedTime < systemTTL)
             {
-                // Create the particle
-                SpawnParticle(ref particles[nextIndex]);
+                for (int i = 0; i < this.particleCount; i++)
+                {
+                    //if (this.particleType == ParticleType.Movement && i % 400 == 0)
+                        //this.EmitterLocation = new Vector2(locationCurrent.X + 5, locationCurrent.Y);
+                    particles.Add(GenerateNewParticle());
+                }
 
-                // Advance the index 
-                nextIndex++;
-                if (nextIndex > particles.Length - 1) nextIndex = 0;
+                for (int particle = 0; particle < particles.Count; particle++)
+                {
+                    particles[particle].Update();
+                    if (particles[particle].TTL <= 0)
+                    {
+                        particles.RemoveAt(particle);
+                        particle--;
+                    }
+                }
             }
-
-            // Part 2: Update Particles
-            float deltaT = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            for (int i = 0; i < particles.Length; i++)
+            else
             {
-                // Skip any "dead" particles
-                if (particles[i].Life <= 0) continue;
-
-                // Update the individual particle
-                UpdateParticle(deltaT, ref particles[i]);
+                particles = new List<Particle>(); 
             }
         }
 
         /// <summary>
-        /// Draw the active particles in the particle system
+        /// Private method for generating new particles
         /// </summary>
-        public void Draw()
+        /// <returns></returns>
+        private Particle GenerateNewParticle()
         {
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+            float angle = (float)0;
+            Vector2 velocity = new Vector2(0);
+            float angularVelocity = (float)0;
+            int particleTTL = 0;
+            Texture2D texture = textures[random.Next(textures.Count)];
 
-            // TODO: Draw particles
-
-            // Iterate through the particles
-            for (int i = 0; i < particles.Length; i++)
+            switch (this.particleType)
             {
-                // Skip any "dead" particles
-                if (particles[i].Life <= 0) continue;
 
-                // Draw the individual particles
-                spriteBatch.Draw(texture, particles[i].Position, null, particles[i].Color, 0f, Vector2.Zero, particles[i].Scale, SpriteEffects.None, 0);
+                case ParticleType.Attack:
+                    //EmitterLocation = positionDestination; 
+                    angle = 0;
+                    particleTTL = 3;
+                    angularVelocity = 0.1f * (float)(random.NextDouble() * 2 - 1);
+                    velocity = new Vector2(
+                                        1f * (float)(random.NextDouble() * 2000 - 1),
+                                        1f * (float)(random.NextDouble() * 2 - 1)); ;
+                    break;
+                case ParticleType.Movement:
+                    angle = 0;
+                    particleTTL = 10;
+                    angularVelocity = 0;// .1f * (float)(random.NextDouble() * 2 - 1);
+                    velocity = new Vector2(
+                        1f * (float)(random.NextDouble() * (travelDistance * 50) - 1),
+                        1f * (float)((double)random.Next(-15, 15)));
+                    break;
+                case ParticleType.Death:
+                    angle = 0;
+                    particleTTL = 3;
+                    angularVelocity = 0.1f * (float)(random.NextDouble() * 2 - 1);
+                    velocity = new Vector2(
+                                    1f * (float)((double)random.Next(-15, 15)),
+                                    1f * (float)((double)random.Next(-15, 15)));
+                    break;
             }
 
-            spriteBatch.End();
+            return new Particle(texture, this.EmitterLocation, velocity, 
+                                angle, angularVelocity, Color.White, 
+                                this.particleSize, particleTTL);
         }
 
+        public Vector2 angleOf(Vector2 p1, Vector2 p2)
+        {
+            return new Vector2(p2.X - p1.X, p1.Y - p2.Y);
+        }
+
+        public double FindDistance(Vector2 p1, Vector2 p2)
+        {
+            return Math.Sqrt(((p2.X - p1.Y) * (p2.X - p1.Y)) + ((p2.Y - p1.Y) * (p2.Y - p1.Y)));
+        }
+
+        /// <summary>
+        /// Draw the particles
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            for (int index = 0; index < particles.Count; index++)
+            {
+                particles[index].Draw(spriteBatch);
+            }
+        }
     }
 }
