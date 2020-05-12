@@ -145,7 +145,7 @@ namespace MonoGameWindowsStarter
             //Create pawns
             for (int i = 0; i < 8; i++)
             {
-                Vector2 position = new Vector2(i * 64, 64);
+                Vector2 position = new Vector2(64, i * 64);
                 pieces.Add(new Pawn("white", position, whitePawn, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
             }
 
@@ -171,13 +171,8 @@ namespace MonoGameWindowsStarter
             //Create pawns
             for (int i = 0; i < 8; i++)
             {
-<<<<<<< HEAD
-                Vector2 position = new Vector2(i * 64, 384);
-                pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
-=======
                 Vector2 position = new Vector2(384, i * 64);
-                pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE));
->>>>>>> d431c77459c4876034ffc69f6df01adf4a80b091
+                pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
             }
 
             //Create knights
@@ -209,13 +204,10 @@ namespace MonoGameWindowsStarter
             //Create pawns
             for (int i = 0; i < 8; i++)
             {
-<<<<<<< HEAD
-                Vector2 position = new Vector2(i * 64, 64);
+                //Vector2 position = new Vector2(64, i * 64);
+                Vector2 position = new Vector2(384, i * 64);
+
                 pieces.Add(new Pawn("white", position, whitePawn, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
-=======
-                Vector2 position = new Vector2(64, i * 64);
-                pieces.Add(new Pawn("white", position, whitePawn, pawnAttackSE, pawnMoveSE, pawnDeathSE));
->>>>>>> d431c77459c4876034ffc69f6df01adf4a80b091
             }
 
             //Create knights
@@ -240,13 +232,8 @@ namespace MonoGameWindowsStarter
             //Create pawns
             for (int i = 0; i < 8; i++)
             {
-<<<<<<< HEAD
-                Vector2 position = new Vector2(i * 64, 384);
-                pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
-=======
                 Vector2 position = new Vector2(384, i * 64);
-                pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE));
->>>>>>> d431c77459c4876034ffc69f6df01adf4a80b091
+                pieces.Add(new Pawn("black", position, blackPawn, pawnAttackSE, pawnMoveSE, pawnDeathSE, attackTextures, movementTextures, deathTextures));
             }
 
             //Create knights
@@ -265,12 +252,8 @@ namespace MonoGameWindowsStarter
             pieces.Add(new Queen("black", new Vector2(448, 256), blackQueen, pawnAttackSE, pawnMoveSE, pawnDeathSE));
 
             //Create king
-<<<<<<< HEAD
-
-
-=======
             //pieces.Add(new King("black", new Vector(448, 192), blackKing, pawnAttackSE, pawnMoveSE, pawnDeathSE));
->>>>>>> d431c77459c4876034ffc69f6df01adf4a80b091
+
         }
 
         /// <summary>
