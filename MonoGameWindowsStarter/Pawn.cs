@@ -69,7 +69,7 @@ namespace MonoGameWindowsStarter
             // Set particle systems
             attackParticles = new ParticleSystem(attackTextures, positionCurrent);
             movementParticles = new ParticleSystem(movementTextures, positionCurrent);
-            movementParticles = new ParticleSystem(deathTextures, positionCurrent);
+            deathParticles = new ParticleSystem(deathTextures, positionCurrent);
         }
 
         public void Select()
@@ -129,6 +129,7 @@ namespace MonoGameWindowsStarter
 
         public void Update(GameTime gameTime)
         {
+
             if (state != AnimationState.Dead)
             {
                 //Update animationTime
@@ -147,13 +148,16 @@ namespace MonoGameWindowsStarter
                 {
                     positionCurrent = positionDestination;
                 }
+
+                // Update particle system
+                deathParticles.Update(positionCurrent); 
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             if (state != AnimationState.Dead)
-            {
+            { 
                 //Draw piece
                 Rectangle source = new Rectangle((int)state * 64, 0, 64, 64);
                 spriteBatch.Draw(texture, positionCurrent, source, Color.White);
@@ -163,6 +167,10 @@ namespace MonoGameWindowsStarter
                 {
 
                 }
+            }
+            else //if(state == AnimationState.Dead)
+            {
+                deathParticles.Draw(spriteBatch);
             }
         }
     }

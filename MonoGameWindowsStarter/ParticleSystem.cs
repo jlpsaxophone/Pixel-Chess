@@ -28,7 +28,11 @@ namespace MonoGameWindowsStarter
         /// <summary>
         /// Number of particles
         /// </summary>
-        private int particleCount; 
+        private int particleCount;
+
+        private int TTL;
+
+        float particleSize; 
 
         /// <summary>
         /// Constructor
@@ -37,21 +41,24 @@ namespace MonoGameWindowsStarter
         /// <param name="location"></param>
         public ParticleSystem(List<Texture2D> textures, Vector2 location)
         {
-            particleCount = 10; 
-            EmitterLocation = location;
             this.textures = textures;
             this.particles = new List<Particle>();
             random = new Random();
+
+            particleCount = 10;
+            TTL = 5;
+            particleSize = (float)0.80;
+            EmitterLocation = location;
         }
 
         /// <summary>
         /// Update 
         /// </summary>
-        public void Update()
+        public void Update(Vector2 location)
         {
-            int total = particleCount; 
+            this.EmitterLocation = location;
 
-            for (int i = 0; i < total; i++)
+            for (int i = 0; i < this.particleCount; i++)
             {
                 particles.Add(GenerateNewParticle());
             }
@@ -67,6 +74,11 @@ namespace MonoGameWindowsStarter
             }
         }
 
+        public void ClearParticles()
+        {
+            this.particles = new List<Particle>();
+        }
+
         /// <summary>
         /// Private method for generating new particles
         /// </summary>
@@ -76,18 +88,12 @@ namespace MonoGameWindowsStarter
             Texture2D texture = textures[random.Next(textures.Count)];
             Vector2 position = EmitterLocation;
             Vector2 velocity = new Vector2(
-                                    1f * (float)(random.NextDouble() * 2 - 1),
-                                    1f * (float)(random.NextDouble() * 2 - 1));
+                                    1f * (float)(random.NextDouble() * 25 - 1),
+                                    1f * (float)(random.NextDouble() * 25 - 1));
             float angle = 0;
             float angularVelocity = 0.1f * (float)(random.NextDouble() * 2 - 1);
-            Color color = new Color(
-                        (float)random.NextDouble(),
-                        (float)random.NextDouble(),
-                        (float)random.NextDouble());
-            float size = (float)random.NextDouble();
-            int ttl = 20 + random.Next(40);
 
-            return new Particle(texture, position, velocity, angle, angularVelocity, color, size, ttl);
+            return new Particle(texture, position, velocity, angle, angularVelocity, Color.White, this.particleSize, this.TTL);
         }
 
         /// <summary>
@@ -96,12 +102,10 @@ namespace MonoGameWindowsStarter
         /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
             for (int index = 0; index < particles.Count; index++)
             {
                 particles[index].Draw(spriteBatch);
             }
-            spriteBatch.End();
         }
     }
 }

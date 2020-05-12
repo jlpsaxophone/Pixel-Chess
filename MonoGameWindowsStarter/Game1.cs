@@ -137,8 +137,10 @@ namespace MonoGameWindowsStarter
             //movementTextures.Add(Content.Load<Texture2D>("Art/Particles/"));
 
             deathTextures = new List<Texture2D>();
-            deathTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Red"));
-            deathTextures.Add(Content.Load<Texture2D>("Art/Particles/Circle-Gray"));
+            deathTextures.Add(Content.Load<Texture2D>("Art/Particles/BloodParticle"));
+            deathTextures.Add(Content.Load<Texture2D>("Art/Particles/BrownDirtParticle"));
+            deathTextures.Add(Content.Load<Texture2D>("Art/Particles/WhiteDirtParticle"));
+
 
 
             //Make white pieces
