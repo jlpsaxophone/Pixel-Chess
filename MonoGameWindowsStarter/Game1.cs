@@ -408,11 +408,15 @@ namespace MonoGameWindowsStarter
 
             if(!playing)
             {
-                Vector2 location = font.MeasureString(winningTeam + " team won!") / 2;
-                spriteBatch.DrawString(font, winningTeam + " team won!", location, Color.White);
+                Vector2 location = font.MeasureString(winningTeam + " team won!");
+                location.X = (graphics.GraphicsDevice.Viewport.Width / 2) - (location.X / 2);
+                location.Y = graphics.GraphicsDevice.Viewport.Height / 4;
+                spriteBatch.DrawString(font, winningTeam + " team won!", location, new Color(132, 194, 74));
 
                 location = font.MeasureString("Press 'R' to play again!");
-                spriteBatch.DrawString(font, "Press 'R' to play again!", location, Color.White);
+                location.X = (graphics.GraphicsDevice.Viewport.Width / 2) - (location.X / 2);
+                location.Y = graphics.GraphicsDevice.Viewport.Height / 2;
+                spriteBatch.DrawString(font, "Press 'R' to play again!", location, new Color(132, 194, 74));
             }
 
             spriteBatch.End();
